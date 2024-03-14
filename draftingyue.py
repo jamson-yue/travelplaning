@@ -157,17 +157,13 @@ if __name__ == "__main__":
     strategy = st.number_input("请输入驾车策略（0：速度优先；1：费用优先；2：距离优先；4：躲避拥堵。)：", min_value=0, max_value=4, step=1)
     num = st.number_input("请输入途经地点数量：", min_value=1, step=1)
     for i in range(num):
-            if 'wp_prov' not in st.session_state:
-                st.session_state.wp_prov = '浙江省'
-                st.session_state.wp_city = '温州市'
-                
-            column4,column5,column6=st.columns(3)
-            wp_prov=column4.selectbox("省份", list(location_dict.keys()),key='wp_prov'+str(i))
-            wp_city=column5.selectbox("城市", list(location_dict[wp_prov].keys()),key="wp_city"+str(i))
-            wp_county=column6.selectbox("区县", location_dict[wp_prov][wp_city],key='wp_county'+str(i))
-            wp_spec=st.text_input("详细地址：",key='wp_prov + wp_city + wp_county'+str(i))
-            wp = wp_prov + wp_city + wp_county + wp_spec
-            locations.append(wp)
+        column4,column5,column6=st.columns(3)
+        wp_prov=column4.selectbox("省份", list(location_dict.keys()),key='wp_prov'+str(i))
+        wp_city=column5.selectbox("城市", list(location_dict[wp_prov].keys()),key="wp_city"+str(i))
+        wp_county=column6.selectbox("区县", location_dict[wp_prov][wp_city],key='wp_county'+str(i))
+        wp_spec=st.text_input("详细地址：",key='wp_prov + wp_city + wp_county'+str(i))
+        wp = wp_prov + wp_city + wp_county + wp_spec
+        locations.append(wp)
  
     # 创建一个名为“路程规划”的按钮
     if st.button('路程规划'):
