@@ -158,8 +158,8 @@ if __name__ == "__main__":
     num = st.number_input("请输入途经地点数量：", min_value=1, step=1)
     for i in range(num):
         column4,column5,column6=st.columns(3)
-        wp_prov=column4.selectbox("省份", list(location_dict.keys()),key='wp_prov'+str(i))
-        wp_city=column5.selectbox("城市", list(location_dict[wp_prov].keys()),key="wp_city"+str(i))
+        wp_prov=column4.selectbox("省份", list(location_dict.keys()),index=list(location_dict.keys()).index(start_prov),key='wp_prov'+str(i))
+        wp_city=column5.selectbox("城市", list(location_dict[wp_prov].keys()),index=list(location_dict[wp_prov].keys()).index(start_city),key="wp_city"+str(i))
         wp_county=column6.selectbox("区县", location_dict[wp_prov][wp_city],key='wp_county'+str(i))
         wp_spec=st.text_input("详细地址：",key='wp_prov + wp_city + wp_county'+str(i))
         wp = wp_prov + wp_city + wp_county + wp_spec
