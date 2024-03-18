@@ -104,34 +104,38 @@ def plot_route(route_plt,path_lst):
         marker=folium.Marker(location=swap_coordinates(get_location(path_lst[i]).split(',')),icon=folium.Icon(icon="info-sign",color='blue'),popup=str(i+1))
         marker.add_to(map_m)
     return map_m
-# 高德地图行政区划API的URL和参数
-url = "https://restapi.amap.com/v3/config/district"
-params = {
-    "key": "a9a6da6bad351dfa3785d21807291b30",
-    "keywords": "中国",
-    "subdistrict": 3,
-    "extensions": "base"
-}
-# 发送HTTP请求并获取响应
-response = requests.get(url, params=params)
-data = json.loads(response.text)
-# 初始化字典
-location_dict = {}
 
-# 遍历省份
-for province in data["districts"][0]["districts"]:
-    province_name = province["name"]
-    location_dict[province_name] = {}
+#获取出发点、途经地点信息，生成起点、途经点矩阵（dataframe)
 
-# 遍历城市
-    for city in province["districts"]:
-        city_name = city["name"]
-        location_dict[province_name][city_name] = []
+if __name__ == "__main__":
+    # 高德地图行政区划API的URL和参数
+    url = "https://restapi.amap.com/v3/config/district"
+    params = {
+        "key": "a9a6da6bad351dfa3785d21807291b30",
+        "keywords": "中国",
+        "subdistrict": 3,
+        "extensions": "base"
+    }
+    # 发送HTTP请求并获取响应
+    response = requests.get(url, params=params)
+    data = json.loads(response.text)
+    # 初始化字典
+    location_dict = {}
 
-# 遍历县区
-        for county in city["districts"]:
-            county_name = county["name"]
-            location_dict[province_name][city_name].append(county_name)
+    # 遍历省份
+    for province in data["districts"][0]["districts"]:
+        province_name = province["name"]
+        location_dict[province_name] = {}
+
+    # 遍历城市
+        for city in province["districts"]:
+            city_name = city["name"]
+            location_dict[province_name][city_name] = []
+
+    # 遍历县区
+            for county in city["districts"]:
+                county_name = county["name"]
+                location_dict[province_name][city_name].append(county_name)
 
 
 #获取出发点、途经地点信息，生成起点、途经点矩阵（dataframe)
@@ -148,9 +152,9 @@ if __name__ == "__main__":
         st.session_state.start_city = '温州市'
         st.session_state.start_county = '鹿城区'
 
-    start_prov = column1.selectbox('省份', list(location_dict.keys()), key='start_prov')
-    start_city=column2.selectbox("城市", list(location_dict[start_prov].keys()),key='start_city')
-    start_county=column3.selectbox("区县", location_dict[start_prov][start_city],key='start_county')
+    start_prov = column1.selectbox('省份', list(location_dict1.keys()), key='start_prov')
+    start_city=column2.selectbox("城市", list(location_dict1[start_prov].keys()),key='start_city')
+    start_county=column3.selectbox("区县", location_dict1[start_prov][start_city],key='start_county')
     start_spec=st.text_input("详细地址：",key=start_prov + start_city + start_county)
     start = start_prov + start_city + start_county + start_spec
     locations = [start]
