@@ -137,7 +137,7 @@ for province in data["districts"][0]["districts"]:
 #获取出发点、途经地点信息，生成起点、途经点矩阵（dataframe)
 
 if __name__ == "__main__":
-    st.title("自驾路线规划")
+    st.title("路线规划")
     st.markdown('<span style="font-family: Arial; font-size: 20px;">注：如需在地图上查看规划的路线，请使用手机浏览器打开本链接。</span>', unsafe_allow_html=True)
     st.write("请输入出发点：")    
     column1,column2,column3=st.columns(3)
@@ -160,7 +160,7 @@ if __name__ == "__main__":
         column4,column5,column6=st.columns(3)
         wp_prov=column4.selectbox("省份", list(location_dict.keys()),index=list(location_dict.keys()).index(start_prov),key='wp_prov'+str(i))
         wp_city=column5.selectbox("城市", list(location_dict[wp_prov].keys()),index=list(location_dict[start_prov].keys()).index(start_city),key="wp_city"+str(i))
-        wp_county=column6.selectbox("区县", location_dict[wp_prov][wp_city],index=None,key='wp_county'+str(i))
+        wp_county=column6.selectbox("区县", location_dict[wp_prov][wp_city],index=location_dict[wp_prov][wp_city].index(start_county),key='wp_county'+str(i))
         wp_spec=st.text_input("详细地址：",key='wp_prov + wp_city + wp_county'+str(i))
         wp = f"{wp_prov} {wp_city} {wp_county} {wp_spec}"
         locations.append(wp)
