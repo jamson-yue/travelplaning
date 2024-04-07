@@ -1,9 +1,9 @@
 {
     "configurations": [
         {
-            "type": "firefox",
+            "type": "chrome",
             "request": "launch",
-            "reAttach": true,
+            // Remove the "reAttach" property
             "name": "Launch localhost",
             "url": "http://localhost:8501",
             "webRoot": "${workspaceFolder}"
