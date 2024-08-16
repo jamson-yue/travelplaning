@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
     start_prov = column1.selectbox('省份', list(location_dict1.keys()), key='start_prov')
     start_city=column2.selectbox("城市", list(location_dict1[start_prov].keys()),key='start_city')
-    start_county=column3.selectbox("区县", location_dict1[start_prov][start_city],key='start_county')
+    start_county=column3.selectbox("区县", list(location_dict1[start_prov][start_city].keys()),key='start_county')
     start_spec=st.text_input("详细地址：",key=start_prov + start_city + start_county)
     start = start_prov + start_city + start_county + start_spec
     locations = [start]
