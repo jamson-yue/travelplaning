@@ -150,8 +150,8 @@ if __name__ == "__main__":
         st.session_state.start_county = '鹿城区'
 
     start_prov = column1.selectbox('省份', list(location_dict1.keys()), key='start_prov')
-    start_city=column2.selectbox("城市", list(location_dict1[start_prov].keys()),key='start_city')
-    start_county=column3.selectbox("区县", list(location_dict1[start_prov][start_city].keys()),key='start_county')
+    start_city=column2.selectbox("城市", list(location_dict1[start_prov]),key='start_city')
+    start_county=column3.selectbox("区县", list(location_dict1[start_prov][start_city]),key='start_county')
     start_spec=st.text_input("详细地址：",key=start_prov + start_city + start_county)
     start = start_prov + start_city + start_county + start_spec
     locations = [start]
@@ -159,9 +159,9 @@ if __name__ == "__main__":
     num = st.number_input("请输入途经地点数量：", min_value=1, step=1)
     for i in range(num):
         column4,column5,column6=st.columns(3)
-        wp_prov=column4.selectbox("省份", list(location_dict1.keys()),index=list(location_dict1.keys()).index(start_prov),key='wp_prov'+str(i))
-        wp_city=column5.selectbox("城市", list(location_dict1[wp_prov].keys()),index=list(location_dict1[start_prov].keys()).index(start_city),key="wp_city"+str(i))
-        wp_county=column6.selectbox("区县", list(location_dict1[wp_prov][wp_city].keys()),index=list(location_dict1[start_prov][start_city].keys()).index(start_county),key='wp_county'+str(i))
+        wp_prov=column4.selectbox("省份", list(location_dict1),index=list(location_dict1).index(start_prov),key='wp_prov'+str(i))
+        wp_city=column5.selectbox("城市", list(location_dict1[wp_prov]),index=list(location_dict1[start_prov]).index(start_city),key="wp_city"+str(i))
+        wp_county=column6.selectbox("区县", list(location_dict1[wp_prov][wp_city]),index=list(location_dict1[start_prov][start_city]).index(start_county),key='wp_county'+str(i))
         wp_spec=st.text_input("详细地址：",key='wp_prov + wp_city + wp_county'+str(i))
         wp = f"{wp_prov} {wp_city} {wp_county} {wp_spec}"
         locations.append(wp)
